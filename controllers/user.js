@@ -1,19 +1,15 @@
 const User = require("../models/userModel");
-const successHandle = require("../service/handler");
+const handleSuccess = require("../service/handlerSuccess");
+const appError = require("../service/appError");
 
 const UserControllers = {
   getUserInfo: async (req, res, next) => {
-    try {
-      const { token } = req.query;
-      if (token !== undefined) {
-        const data = await User.findById(token);
-        setTimeout(() => {
-          successHandle(res, data);
-        }, 5000);
-      }
-    } catch (err) {
-      console.error(err);
+    const { token } = req.query;
+    if (!token) {
+      return appError(400, "缺少 Token 參數", next);
     }
+    const data = await User.findById(token);
+    handleSuccess(res, data);
   },
 };
 

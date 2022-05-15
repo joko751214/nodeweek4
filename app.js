@@ -2,10 +2,17 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const { errorHandle } = require("./service/handler");
-
 const postRouter = require("./routes/post");
 const userRouter = require("./routes/user");
+require("dotenv").config({ path: "./config.env" });
+
+// 補捉程式錯誤
+process.on("uncaughtException", (err) => {
+  // 記錄錯誤下來，等到服務都處理完後，停掉該 process
+  console.error("Uncaughted Exception！");
+  console.error(err);
+  process.exit(1);
+});
 
 const app = express();
 
@@ -35,9 +42,19 @@ app.use((req, res, next) => {
   errorHandle(res, 404, "無此網站路由");
 });
 
+const { resErrorDev, resErrorProd } = require("./service/resError");
+
 app.use((err, req, res, next) => {
-  console.log(err, "error");
-  errorHandle(res, 500, "系統異常");
+  err.statusCode = err.statusCode || 500;
+  if (process.env.NODE_ENV === "dev") return resErrorDev(err, res);
+  resErrorProd(err, res);
+  // errorHandle(res, 500, "系統異常");
+});
+
+// 未捕捉到的 catch
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("未捕捉到的 rejection：", promise, "原因：", reason);
+  // 記錄於 log 上
 });
 
 module.exports = app;
