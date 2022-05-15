@@ -1,5 +1,5 @@
 const Post = require("../models/postModel");
-const { successHandle } = require("../service/handler");
+const successHandle = require("../service/handler");
 const ImageController = require("./image");
 
 const postController = {
@@ -25,8 +25,6 @@ const postController = {
   createPost: async (req, res) => {
     try {
       let image = "";
-      console.log(req.body, "body");
-      console.log(req.file, "file");
       if (req.file) {
         const { data } = await ImageController.uploadOneFile(req);
         image = data.link !== undefined ? data.link : "";
@@ -38,8 +36,7 @@ const postController = {
       });
       successHandle(res, data);
     } catch (err) {
-      console.log(err, "error");
-      errorHandle(res, 400, "參數有誤");
+      console.log(err.statusCode, "error");
     }
   },
 };

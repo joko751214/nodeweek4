@@ -1,8 +1,8 @@
 const User = require("../models/userModel");
-const { successHandle, errorHandle } = require("../service/handler");
+const successHandle = require("../service/handler");
 
 const UserControllers = {
-  getUserInfo: async (req, res) => {
+  getUserInfo: async (req, res, next) => {
     try {
       const { token } = req.query;
       if (token !== undefined) {
@@ -13,7 +13,6 @@ const UserControllers = {
       }
     } catch (err) {
       console.error(err);
-      errorHandle(res, 400, "查無此人");
     }
   },
 };
