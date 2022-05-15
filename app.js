@@ -4,8 +4,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { errorHandle } = require("./service/handler");
 
-const postRouter = require("./routes/posts");
-const userRouter = require("./routes/users");
+const postRouter = require("./routes/post");
+const userRouter = require("./routes/user");
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/posts", postRouter);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
 
 app.use((req, res, next) => {
   errorHandle(res, 404, "無此網站路由");
