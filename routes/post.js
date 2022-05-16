@@ -5,18 +5,13 @@ const PostController = require("../controllers/post");
 const handleErrorAsync = require("../service/handleErrorAsync");
 
 // 獲取全體動態牆資料
-router.get(
-  "/",
-  handleErrorAsync((req, res, next) => PostController.getPosts(req, res))
-);
+router.get("/", handleErrorAsync(PostController.getPosts));
 
 // 新增動態牆
 router.post(
   "/",
   upload.single("image"),
-  handleErrorAsync((req, res, next) =>
-    PostController.createPost(req, res, next)
-  )
+  handleErrorAsync(PostController.createPost)
 );
 
 // router.delete("/", async (req, res) => {

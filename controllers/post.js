@@ -30,7 +30,8 @@ const postController = {
     }
     const data = await Post.create({
       image,
-      ...body,
+      user,
+      content,
     });
     handleSuccess(res, data);
   },
