@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const handleSuccess = require("../service/handlerSuccess");
 const appError = require("../service/appError");
 
-const UserControllers = {
+const user = {
   getUserInfo: async (req, res, next) => {
     const { token } = req.query;
     if (!token) {
@@ -13,4 +13,4 @@ const UserControllers = {
   },
 };
 
-module.exports = UserControllers;
+module.exports = user;

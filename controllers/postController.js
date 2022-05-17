@@ -1,9 +1,9 @@
 const Post = require("../models/postModel");
 const handleSuccess = require("../service/handlerSuccess");
-const ImageController = require("./image");
+const ImageController = require("./imageController");
 const appError = require("../service/appError");
 
-const postController = {
+const post = {
   getPosts: async (req, res) => {
     const timeSort = req.query.timeSort === "asc" ? "createAt" : "-createAt";
     const keyword =
@@ -37,4 +37,4 @@ const postController = {
   },
 };
 
-module.exports = postController;
+module.exports = post;

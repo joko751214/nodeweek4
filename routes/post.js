@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("../utils/multer");
-const PostController = require("../controllers/post");
+const PostController = require("../controllers/postController");
 const handleErrorAsync = require("../service/handleErrorAsync");
 
 // 獲取全體動態牆資料

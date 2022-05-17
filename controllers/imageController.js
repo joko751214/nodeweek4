@@ -7,7 +7,7 @@ const client = new ImgurClient({
   refreshToken: process.env.REFRESH_TOKEN,
 });
 
-const ImageController = {
+const image = {
   uploadOneFile: async (req) => {
     const response = await client.upload({
       image: req.file.buffer,
@@ -19,4 +19,4 @@ const ImageController = {
   },
 };
 
-module.exports = ImageController;
+module.exports = image;
