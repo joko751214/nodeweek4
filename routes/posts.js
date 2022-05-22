@@ -30,22 +30,27 @@ router.get("/", async (req, res) => {
 // 新增動態牆
 router.post("/", upload.single("image"), async (req, res) => {
   try {
+    const { user, content } = req.body;
+    if (!content) {
+      return errorHandle(res, "請填寫貼文內容");
+    }
+    if (!user) {
+      return errorHandle(res, "Token 值不得為空");
+    }
     let image = "";
-    console.log(req.body, "body");
-    console.log(req.file, "file");
     if (req.file) {
       const { data } = await ImageControllers.uploadOneFile(req);
       image = data.link !== undefined ? data.link : "";
     }
-    const body = req.body;
     const data = await Post.create({
       image,
-      ...body,
+      user,
+      content,
     });
     successHandle(res, data);
   } catch (err) {
     console.log(err, "error");
-    errorHandle(res, 400, "參數有誤");
+    errorHandle(res, "參數有誤");
   }
 });
 
@@ -61,7 +66,7 @@ router.delete("/:id", async (req, res) => {
     successHandle(res, data);
   } catch (err) {
     console.log(err, "error");
-    errorHandle(res, 400, "id 不存在");
+    errorHandle(res, "id 不存在");
   }
 });
 
@@ -72,7 +77,7 @@ router.patch("/:id", async (req, res) => {
     successHandle(res, data);
   } catch (err) {
     console.log(err, "error");
-    errorHandle(res, 400, "id 不存在");
+    errorHandle(res, "id 不存在");
   }
 });
 

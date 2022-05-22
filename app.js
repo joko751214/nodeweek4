@@ -21,12 +21,12 @@ app.use("/posts", postRouter);
 app.use("/users", userRouter);
 
 app.use((req, res, next) => {
-  errorHandle(res, 404, "無此網站路由");
+  errorHandle(res, "無此網站路由", 404);
 });
 
 app.use((err, req, res, next) => {
   console.log(err, "error");
-  errorHandle(res, 500, "系統異常");
+  errorHandle(res, "系統異常", 500);
 });
 
 module.exports = app;

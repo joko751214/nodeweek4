@@ -16,7 +16,7 @@ router.get("/", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    errorHandle(res, 400, "查無此人");
+    errorHandle(res, "查無此人");
   }
 });
 
