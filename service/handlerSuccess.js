@@ -1,5 +1,5 @@
 const successHandle = (res, data = [], status = 200) => {
-  res.status(status).json({
+  res.json({
     status,
     data,
   });
